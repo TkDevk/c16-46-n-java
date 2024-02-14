@@ -11,6 +11,8 @@
     "build-css":"tailwindcss build src/index.css -o public/style.css"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1"
