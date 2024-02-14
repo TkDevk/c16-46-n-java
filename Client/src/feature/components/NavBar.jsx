@@ -1,3 +1,4 @@
+
 import { FcHome } from "react-icons/fc";
 import { PiCalendarDuotone } from "react-icons/pi";
 import { MdOutlineNotificationsActive } from "react-icons/md";
@@ -8,37 +9,37 @@ import { CgMenuRound } from "react-icons/cg";
 const NavBar = () => {
   return (
     <>
-      <nav>
-        <section className="left">
-          
-          <h1 className="title">
-            <a href="">
+      <nav className={`absolute top-0 w-full h-12vh flex p-3 pr-5 pl-5 justify-between`}>
+        <section className="flex">
+          <h1 className="flex text-xl">
+            <a href="./">
                 <picture 
-                style={{bottom:'-3px'}}
                 >
                 <FcHome 
                 style={{fontSize:'2.5rem'}}/>                
                 </picture>
-                <span
+                <span className={`absolute top-5 pl-12`}
                 >TUVIVIENDA.com</span>
             </a>
           </h1>
         </section>
-        <section className="right">
-          <picture>
-            <PiCalendarDuotone style={{fontSize:'2rem'}}/>
+        <section className="flex p-2 border border-black rounded-full
+        gap-4
+        ">
+          <picture >
+            <PiCalendarDuotone style={{fontSize:'2rem', cursor:'pointer'}}/>
           </picture>
           <picture>
-            <MdOutlineNotificationsActive style={{fontSize:'2rem'}}/>
+            <MdOutlineNotificationsActive style={{fontSize:'2rem', cursor:'pointer'}}/>
           </picture>
           <picture>
-            <BiMessageRoundedDots style={{fontSize:'2rem'}}/>
+            <BiMessageRoundedDots style={{fontSize:'2rem', cursor:'pointer'}}/>
           </picture>
           <picture>
-            <CgMenuRound style={{fontSize:'2rem'}}/>
+            <CgMenuRound style={{fontSize:'2rem', cursor:'pointer'}}/>
           </picture>
           <picture>
-            <BsPersonCircle style={{fontSize:'2rem'}}/>
+            <BsPersonCircle style={{fontSize:'2rem', cursor:'pointer'}}/>
           </picture>
         </section>
       </nav>

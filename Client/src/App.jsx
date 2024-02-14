@@ -1,12 +1,12 @@
-import './App.css'
-import NavBar from './feature/components/NavBar'
+import NavBar from "./feature/components/NavBar"
+import SideBar from "./feature/components/SideBar"
 
 function App() {
 
-
   return (
     <>
-      <NavBar/>
+    <NavBar />
+    <SideBar isOpen={true}/>
     </>
   )
 }
