@@ -2,22 +2,17 @@ package com.c1646njava.tuvivienda.models.post;
 
 import java.util.List;
 
+import com.c1646njava.tuvivienda.models.image.Image;
+import jakarta.persistence.*;
 import org.hibernate.annotations.ManyToAny;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@Table(name = "post")
 public class Post {
     
     @Id

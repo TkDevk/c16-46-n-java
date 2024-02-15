@@ -1,10 +1,11 @@
 package com.c1646njava.tuvivienda.services;
 
 import com.c1646njava.tuvivienda.models.post.Post;
+import com.c1646njava.tuvivienda.services.abstraction.SystemService;
 
 import java.util.List;
 
-public class SystemServiceImpl implements SystemService{
+public class SystemServiceImpl implements SystemService {
 
     @Override
     public Long registerUser(String name, String password, String email) throws IllegalArgumentException {

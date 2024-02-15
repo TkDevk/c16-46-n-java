@@ -4,6 +4,7 @@ package com.c1646njava.tuvivienda.services;
 import com.c1646njava.tuvivienda.repositories.AdministratorRepository;
 import com.c1646njava.tuvivienda.repositories.PostRepository;
 import com.c1646njava.tuvivienda.repositories.UserRepository;
+import com.c1646njava.tuvivienda.services.abstraction.SystemService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

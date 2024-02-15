@@ -1,20 +1,22 @@
 package com.c1646njava.tuvivienda.models.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.c1646njava.tuvivienda.models.image.Image;
 import com.c1646njava.tuvivienda.models.post.Post;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.c1646njava.tuvivienda.models.user.dto.RequestUser;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
+@Table(name = "user")
 public class User {
     
     @Id
@@ -34,8 +36,12 @@ public class User {
     @Column(name = "favs")
     private List<Post> fav;
 
-
-
-
-
+    public User(RequestUser user){
+        this.name = user.name();
+        this.email = user.email();
+        this.password = user.password();
+        this.avatar =  user.avatar();
+        this.country = user.country();
+        this.fav = new ArrayList<>();
+    }
 }

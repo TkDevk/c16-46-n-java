@@ -1,4 +1,4 @@
-package com.c1646njava.tuvivienda.services;
+package com.c1646njava.tuvivienda.services.abstraction;
 
 import java.util.List;
 
