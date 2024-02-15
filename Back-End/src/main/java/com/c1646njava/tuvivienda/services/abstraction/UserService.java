@@ -21,7 +21,4 @@ public interface UserService {
     /**
      *This method is to check the user session */
     Boolean checkSession();
-
-
-
 }
