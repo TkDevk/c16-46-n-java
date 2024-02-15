@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../auth/context/AuthContext";
+import RegisterForm from "./RegisterForm"
 
 const initialLoginForm = {
   email: "",
@@ -7,6 +8,8 @@ const initialLoginForm = {
 };
 
 const LoginForm = () => {
+
+  const [open, setOpen] = useState(false);
   const { handlerLogin } = useContext(AuthContext);
 
   const [loginForm, setLoginForm] = useState(initialLoginForm);
@@ -30,7 +33,9 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="bg-white w-full h-full p-2">
+    <>
+    <h3 className="absolute w-full text-center top-3 text-gray-700 font-bold">Login</h3>
+    <form onSubmit={onSubmit} className="bg-white w-full h-full p-2" >
       <div className="mb-4">
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
@@ -62,7 +67,7 @@ const LoginForm = () => {
         />
         <p className="text-red-500 text-xs italic">Escribe una contraseña.</p>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col items-center justify-between gap-4">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="submit"
@@ -75,8 +80,14 @@ const LoginForm = () => {
         >
           Olvidé mi contraseña.
         </a>
+       
+        <a 
+        className="text-xs hover:text-#fff"
+        href="#" onClick={()=>setOpen(true)}> Registrarse </a>
+        {open && <RegisterForm/>}  
       </div>
     </form>
+    </>
   );
 };
 
