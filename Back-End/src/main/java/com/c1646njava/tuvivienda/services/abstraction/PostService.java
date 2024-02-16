@@ -9,6 +9,7 @@ import java.util.List;
 public interface PostService {
 
     List<Post> searchByLocation(String address);
+
     List<Post> searchByType(String type);
     List<Post> searchByBedrooms(Integer bedrooms);
     List<Post> searchByPrice(Long priceLow,Long PriceHigh);
