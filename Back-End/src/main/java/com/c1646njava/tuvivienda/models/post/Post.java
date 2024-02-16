@@ -2,6 +2,7 @@ package com.c1646njava.tuvivienda.models.post;
 
 import java.util.List;
 
+import com.c1646njava.tuvivienda.models.administrator.Administrator;
 import com.c1646njava.tuvivienda.models.image.Image;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ManyToAny;

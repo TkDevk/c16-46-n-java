@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.AuthenticationException;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -37,9 +39,18 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public Boolean loginUser(String email, String Password) {
-        return null;
-    }
+    public User loginUser(String email, String password) throws AuthenticationException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new AuthenticationException("Invalid email or password"));
+
+        // 2. Verify the password using a secure hashing algorithm
+        if (password != user.getPassword()) {
+            throw new AuthenticationException("Invalid email or password");
+        }
+
+        // 3. Return the authenticated user object
+        return user;    }
+
 
     @Override
     public Boolean logoutUser() {
