@@ -6,6 +6,7 @@ import com.c1646njava.tuvivienda.services.abstraction.PostService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostServiceI implements PostService {
@@ -17,24 +18,32 @@ public class PostServiceI implements PostService {
     }
 
     @Override
-    public List<Post> searchByLocation(String address) {
-        List<Post> posts = postrepositorio.searchByLocation(address);
-        return posts;
+    public Optional<List<Post>> searchByLocation(String address) {
+        return postrepositorio.searchByLocation(address);
 
     }
 
     @Override
-    public List<Post> searchByType(String type) {
-        return null;
+    public Optional<List<Post>> searchByType(String type) {
+        return postrepositorio.searchByType(type);
+
     }
 
     @Override
-    public List<Post> searchByBedrooms(Integer bedrooms) {
-        return null;
+    public Optional<List<Post>> searchByBedrooms(Integer bedrooms) {
+        return postrepositorio.searchByBedrooms(bedrooms);
     }
 
     @Override
-    public List<Post> searchByPrice(Long priceLow, Long PriceHigh) {
-        return null;
+    public Optional<List<Post>> searchByPrice(Long priceLow, Long PriceHigh) {
+        return postrepositorio.searchByPrice(priceLow,PriceHigh);
     }
+
+    /*
+    public Optional<List<Post>> poraddress2(String address){
+        return postrepositorio.findByAddress(address);
+
+    }
+    */
+
 }

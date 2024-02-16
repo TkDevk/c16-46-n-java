@@ -5,10 +5,13 @@ import java.util.List;
 import com.c1646njava.tuvivienda.models.administrator.Administrator;
 import com.c1646njava.tuvivienda.models.image.Image;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.ManyToAny;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Data
@@ -41,7 +44,10 @@ public class Post {
     @JoinColumn(name = "administrator_id", referencedColumnName = "id")
     private Administrator administrator;
 
-    @OneToMany
+    @OneToMany //Revisar
     private List<Image> image;
+
+
+
 
 }

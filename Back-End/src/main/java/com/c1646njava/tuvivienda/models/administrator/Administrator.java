@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -19,6 +21,7 @@ public class Administrator extends User {
 
     @Column(name = "phone_number")
     private String phoneNumber;
-    @OneToMany
-    private Post posts;
+
+    @OneToMany(mappedBy = "administrator")
+    private List<Post> posts;
 }
