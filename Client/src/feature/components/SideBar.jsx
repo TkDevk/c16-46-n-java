@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import LoginForm from "./forms/LoginForm";
 import { Route, Routes } from "react-router-dom"
@@ -8,19 +8,21 @@ import Calendar from "./Calendar";
 import Notifications from "./Notifications";
 import Messages from "./Messages";
 import Settings from "./Settings";
+import { HomeContext } from "../../context/HomeContext";
 
-const SideBar = ({ isOpen }) => {
-  const [open, setOpen] = useState(isOpen);
+const SideBar = () => {
+  const {sidebarVisible, handlerCloseSideBar} = useContext(HomeContext);
+
   return (
     <aside
-      className={`fixed top-[10vh] right-0 z-40 md:w-2/5 lg:w-1/4 w-10/12 h-screen shadow-lg duration-500 p-4 transition-transform ${
-        open ? "" : "translate-x-full"
+      className={`fixed z-40 top-[10vh] right-0 z-40 md:w-2/5 lg:w-1/4 w-10/12 h-screen shadow-lg duration-500 p-4 transition-transform ${
+        sidebarVisible ? "" : "translate-x-full"
       }`}
     >
       {/* CLOSE BUTTON */}
       <button
         className="absolute top-2 rounded-full bg-gray-200 z-10"
-        onClick={() => setOpen(false)}
+        onClick={handlerCloseSideBar}
       >
         <IoCloseCircleOutline style={{fontSize:'1.5rem', zIndex:'0'}}/>
       </button>
