@@ -1,14 +1,14 @@
 package com.c1646njava.tuvivienda.controllers;
 
 import com.c1646njava.tuvivienda.models.post.Post;
-import com.c1646njava.tuvivienda.repositories.PostRepository;
 import com.c1646njava.tuvivienda.services.abstraction.PostService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.c1646njava.tuvivienda.repositories.PostRepository;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +16,9 @@ import java.util.Optional;
 @RequestMapping("/post")
 @AllArgsConstructor
 public class PostController {
+    @Autowired
     private PostService postservicio;
+
 
     @GetMapping("/findByName/{address}")
     public ResponseEntity<?> searchByLocation(@PathVariable String address){
@@ -40,7 +42,7 @@ public class PostController {
     }
 
     @GetMapping("/findByBedrooms/{bedrooms}")
-    public ResponseEntity<?>  searchByBedrooms(@PathVariable int bedrooms){
+    public ResponseEntity<?>  searchByBedrooms(@PathVariable Integer bedrooms){
         Optional<List<Post>> posts = postservicio.searchByBedrooms(bedrooms);
 
         if(posts.isEmpty()){
@@ -62,6 +64,17 @@ public class PostController {
 
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<?> createPost(@Valid @RequestBody Post post){
+        Long id = postservicio.crearPost(post);
+        if(id != null){
+            return ResponseEntity.ok(id);
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Atributos invalidos del post");
+
+        }
+
+    }
 
 
 

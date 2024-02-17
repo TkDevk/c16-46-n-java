@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    Optional<List<Post>> findByAddress(String address);
+
 
 
     @Query("SELECT p FROM Post p WHERE p.address = LOWER(:address1)")
@@ -17,7 +17,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p WHERE p.type = LOWER(:type1)")
     Optional<List<Post>>  searchByType(String type1);
-    @Query("SELECT p FROM Post p WHERE p.bedrooms = LOWER(:bedrooms1)")
+    @Query("SELECT p FROM Post p WHERE p.bedrooms = bedrooms1")
     Optional<List<Post>>  searchByBedrooms(Integer bedrooms1);
 
     @Query("SELECT p FROM Post p WHERE p.price >= :priceLow AND p.price <= :PriceHigh")
