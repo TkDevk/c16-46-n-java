@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { HomeContext } from "../../context/HomeContext";
 
-const sizeFont = "1.5rem"
+const sizeFont = "1.5rem";
 
 const navItems = [
   {
@@ -39,23 +39,21 @@ const NavBar = () => {
   return (
     <>
       <nav
-        className={`absolute top-0 w-full h-12vh flex p-3 pr-3 pl-5 z-60`}
+        className={`absolute top-0 justify-between right-0 w-full h-12vh flex p-3 pr-3 pl-5 z-60`}
       >
         <section className="flex items-center">
-          <h1 className="flex md:text-xl">
-            <a href="./">
-              <picture>
-                <FcHome style={{ fontSize: "1.5rem" }} />
-              </picture>
-              <span className={`invisible md:visible top-5 pl-12`}>
+          <a href="./" className="flex">
+            <picture>
+              <FcHome style={{ fontSize: "1.5rem" }} />
+            </picture>
+            <h1 className="md:text-xl">
+              <span className={`invisible md:visible top-5 pl-4`}>
                 TUVIVIENDA.com
               </span>
-            </a>
-          </h1>
+            </h1>
+          </a>
         </section>
-        <section
-          className="flex items-center rounded-full gap-4 justify-center"
-        >
+        <section className="flex items-center rounded-full gap-4 justify-center">
           {navItems.map((item) => {
             return (
               <Link
@@ -64,9 +62,7 @@ const NavBar = () => {
                 name={item.name}
                 onClick={handlerOpenSidebar}
               >
-                <picture>
-                  {item.icon}
-                </picture>
+                <picture>{item.icon}</picture>
               </Link>
             );
           })}
