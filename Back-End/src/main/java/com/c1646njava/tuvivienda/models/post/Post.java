@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.c1646njava.tuvivienda.models.administrator.Administrator;
 import com.c1646njava.tuvivienda.models.image.Image;
+import com.c1646njava.tuvivienda.models.user.User;
 import jakarta.persistence.*;
 
 
@@ -46,6 +47,9 @@ public class Post {
     @NotEmpty
     private Boolean status;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
     @ManyToOne
     @JoinColumn(name = "administrator_id", referencedColumnName = "id")
     private Administrator administrator;
