@@ -3,14 +3,24 @@ import { useHome } from "../hooks/useHome";
 import { HomeContext } from "./HomeContext";
 
 const HomeProvider = ({ children }) => {
-  const { sidebarVisible, handlerOpenSidebar, handlerCloseSideBar } = useHome();
+  const {
+    sidebarVisible,
+    isRegisterOpen,
+    handlerOpenSidebar,
+    handlerCloseSideBar,
+    handlerRegisterOpen,
+    handlerRegisterClose,
+  } = useHome();
 
   return (
     <HomeContext.Provider
       value={{
         sidebarVisible,
+        isRegisterOpen,
         handlerOpenSidebar,
         handlerCloseSideBar,
+        handlerRegisterOpen,
+        handlerRegisterClose,
       }}
     >
       {children}
