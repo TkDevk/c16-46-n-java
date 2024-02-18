@@ -9,6 +9,7 @@ import Notifications from "./Notifications";
 import Messages from "./Messages";
 import Settings from "./Settings";
 import { HomeContext } from "../../context/HomeContext";
+import RegisterForm from "./forms/RegisterForm";
 
 const SideBar = () => {
   const {sidebarVisible, handlerCloseSideBar} = useContext(HomeContext);
@@ -33,6 +34,7 @@ const SideBar = () => {
         {/* ADD CONTENT / FORM HERE */}
         <Routes>
            <Route path="/login" element={<LoginForm />} />
+           <Route path="/register" element={<RegisterForm />}/>
            <Route path="/calendar" element={<Calendar />} />
            <Route path="/notifications" element={<Notifications />} />
            <Route path="/messages" element={<Messages />} />

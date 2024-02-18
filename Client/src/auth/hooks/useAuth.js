@@ -6,6 +6,8 @@
     user: undefined,
 }) */
 
+import { useState } from "react"
+
 export const useAuth = () => {
 
     const handlerLogin = ({email, password}) => {
@@ -19,6 +21,6 @@ export const useAuth = () => {
 
     return {
         handlerLogin,
-        handlerLogout
+        handlerLogout,
     }
 }
