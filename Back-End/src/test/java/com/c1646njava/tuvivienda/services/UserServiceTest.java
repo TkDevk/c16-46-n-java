@@ -61,7 +61,7 @@ public class UserServiceTest {
         user.setCountry("Mexico");
 
         // Expected userRepository behavior
-        when(userRepository.findByEmail("pedroPascal@gmail.com")).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail("pascalpedro@gmail.com")).thenReturn(Optional.of(user));
 
         //Act and assert
         assertThrows(IllegalArgumentException.class, ()
