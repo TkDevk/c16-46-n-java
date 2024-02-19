@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -51,7 +53,21 @@ public class UserServiceTest {
     @Test
     @DisplayName("Test registering a user with email that already exist")
     void registerUser_InvalidEmail_AlreadyExist_Failure() {
-        // Test logic here
+        //Arrange
+        User user = new User();
+        user.setName("Pedro");
+        user.setPassword("1234A");
+        user.setEmail("pascalpedro@gmail.com");
+        user.setCountry("Mexico");
+
+        // Expected userRepository behavior
+        when(userRepository.findByEmail("pedroPascal@gmail.com")).thenReturn(Optional.of(user));
+
+        //Act and assert
+        assertThrows(IllegalArgumentException.class, ()
+                -> userService.registerUser("Pedro","1234A","1234A","pascalpedro@gmail.com","Mexico"));
+
+        verify(userRepository, never()).save(any());
     }
 
     @Test
