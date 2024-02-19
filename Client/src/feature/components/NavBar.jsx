@@ -57,6 +57,7 @@ const NavBar = () => {
           {navItems.map((item) => {
             return (
               <Link
+              key={item.name}
                 to={`/${item.name}`}
                 className="cursor-pointer"
                 name={item.name}

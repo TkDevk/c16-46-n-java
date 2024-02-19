@@ -4,10 +4,10 @@ import LoginForm from "./forms/LoginForm";
 import { Route, Routes } from "react-router-dom"
 
 import PropTypes from "prop-types"
-import Calendar from "./Calendar";
-import Notifications from "./Notifications";
-import Messages from "./Messages";
-import Settings from "./Settings";
+import Calendar from "./menu/Calendar";
+import Notifications from "./menu/Notifications";
+import Messages from "./menu/Messages";
+import Settings from "./menu/Settings";
 import { HomeContext } from "../../context/HomeContext";
 import RegisterForm from "./forms/RegisterForm";
 
