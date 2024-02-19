@@ -30,8 +30,8 @@ public class PostServiceI implements PostService {
     }
 
     @Override
-    public Optional<List<Post>> searchByBedrooms(Integer bedrooms) {
-        return postrepositorio.searchByBedrooms(bedrooms);
+    public Optional<List<Post>>  searchByBedrooms(Integer bedrooms1) {
+        return postrepositorio.searchByBedrooms(bedrooms1);
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface PostService {
     Optional<List<Post>> searchByLocation(String address);
 
     Optional<List<Post>> searchByType(String type);
-    Optional<List<Post>>searchByBedrooms(Integer bedrooms);
+    Optional<List<Post>>searchByBedrooms(Integer bedrooms1);
     Optional<List<Post>> searchByPrice(Long priceLow,Long PriceHigh);
     Long crearPost(Post post);
 }
