@@ -2,7 +2,7 @@ import NavBar from "./feature/components/NavBar";
 //import RegisterForm from "./feature/components/forms/RegisterForm"
 import SideBar from "./feature/components/SideBar";
 import SearchBar from "./feature/components/SearchBar";
-import CardItem from "./feature/components/CardItem";
+import CardItem from "./feature/components/cards/CardItem";
 
 function App() {
 

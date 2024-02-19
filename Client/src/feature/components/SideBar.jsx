@@ -30,7 +30,7 @@ const SideBar = () => {
 
       
 
-      <div className="w-full h-full m-2 mt-10 p-2">
+      <div className="w-full h-full mt-10 p-2">
         {/* ADD CONTENT / FORM HERE */}
         <Routes>
            <Route path="/login" element={<LoginForm />} />
