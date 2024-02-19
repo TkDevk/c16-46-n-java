@@ -65,7 +65,7 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createPost(@Valid @RequestBody Post post){
+    public ResponseEntity<?> createPost( @Valid @RequestBody Post post){
         Long id = postservicio.crearPost(post);
         if(id != null){
             return ResponseEntity.ok(id);

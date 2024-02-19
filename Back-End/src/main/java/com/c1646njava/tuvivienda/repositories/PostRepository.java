@@ -17,7 +17,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p WHERE p.type = LOWER(:type1)")
     Optional<List<Post>>  searchByType(String type1);
-    @Query("SELECT p FROM Post p WHERE p.bedrooms = bedrooms1")
+    @Query("SELECT p FROM Post p WHERE p.bedrooms = :bedrooms1")
     Optional<List<Post>>  searchByBedrooms(Integer bedrooms1);
 
     @Query("SELECT p FROM Post p WHERE p.price >= :priceLow AND p.price <= :PriceHigh")
