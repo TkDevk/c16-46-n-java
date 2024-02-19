@@ -42,7 +42,7 @@ const LoginForm = () => {
             Correo
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={`shadow appearance-none border ${!email ? 'border-red-500': ''} rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
             id="email"
             type="text"
             placeholder="tucorreo@ejemplo.com"
@@ -57,7 +57,7 @@ const LoginForm = () => {
             Contraseña
           </label>
           <input
-            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className={`shadow appearance-none border ${!password && 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
             id="password"
             type="password"
             placeholder="*************"

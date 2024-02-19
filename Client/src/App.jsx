@@ -2,6 +2,7 @@ import NavBar from "./feature/components/NavBar";
 //import RegisterForm from "./feature/components/forms/RegisterForm"
 import SideBar from "./feature/components/SideBar";
 import SearchBar from "./feature/components/SearchBar";
+import CardItem from "./feature/components/CardItem";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
 
       <div className="w-full mt-20">
         <SearchBar />
+        <CardItem />
       </div>
     </div>
   );
