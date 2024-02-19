@@ -3,7 +3,7 @@ package com.c1646njava.tuvivienda.models.post;
 import java.util.List;
 
 import com.c1646njava.tuvivienda.models.administrator.Administrator;
-import com.c1646njava.tuvivienda.models.image.Image;
+import com.c1646njava.tuvivienda.models.image.ImagePost;
 import com.c1646njava.tuvivienda.models.user.User;
 import jakarta.persistence.*;
 
@@ -54,8 +54,8 @@ public class Post {
     @JoinColumn(name = "administrator_id", referencedColumnName = "id")
     private Administrator administrator;
 
-    @OneToMany //Revisar
-    private List<Image> image;
+    @OneToMany
+    private List<ImagePost> image;
 
 
 

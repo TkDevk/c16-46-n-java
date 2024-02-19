@@ -29,10 +29,10 @@ public class MainControler {
 
     @GetMapping("/list")
     public ResponseEntity<List<Image>> list(){
-        List<Image> list = imageServiceImp.list();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        List<Image> images = imageRepository.findAll();
+        return new ResponseEntity<>(images, HttpStatus.OK);
     }
-@PostMapping("/upload")
+@PostMapping("/upload_user_avatar")
     public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile) throws IOException{
     BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
     if(bi == null){
@@ -43,18 +43,18 @@ public class MainControler {
             new Image((String)result.get("original_filename"),
             (String) result.get("url"),
             (String) result.get("public_id"));
-    imageRepository.save(image);
+    imageServiceImp.save(image);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) throws IOException{
-        if(!imageRepository.existsById(id)){
+        if(!imageServiceImp.exists(id)){
             return new ResponseEntity<>(new Mensaje("The image does not exist"), HttpStatus.NOT_FOUND);
         }
 
-        Image image = imageRepository.findById(id).get();
+        Image image = imageServiceImp.getOne(id).get();
         Map result = cloudinaryServiceImp.delete(image.getImageId());
-        imageRepository.deleteById(id);
+        imageServiceImp.delete(id);
         return new ResponseEntity<>(new Mensaje("The image has been deleted"), HttpStatus.OK);
     }
 }
