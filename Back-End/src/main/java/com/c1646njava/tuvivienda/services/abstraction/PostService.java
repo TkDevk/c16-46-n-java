@@ -4,14 +4,15 @@ import com.c1646njava.tuvivienda.models.post.Post;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface PostService {
 
-    List<Post> searchByLocation(String address);
+    Optional<List<Post>> searchByLocation(String address);
 
-    List<Post> searchByType(String type);
-    List<Post> searchByBedrooms(Integer bedrooms);
-    List<Post> searchByPrice(Long priceLow,Long PriceHigh);
-
+    Optional<List<Post>> searchByType(String type);
+    Optional<List<Post>>searchByBedrooms(Integer bedrooms1);
+    Optional<List<Post>> searchByPrice(Long priceLow,Long PriceHigh);
+    Long crearPost(Post post);
 }

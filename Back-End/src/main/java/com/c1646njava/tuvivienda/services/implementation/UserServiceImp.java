@@ -75,6 +75,9 @@ public class UserServiceImp implements UserService {
         if(email.isBlank()){
             throw new IllegalArgumentException("The user must have a email");
         }
+        if(userRepository.findByEmail(email)!=null){
+            throw new IllegalArgumentException("The email is in use");
+        }
         if(country.isBlank()){
             throw new IllegalArgumentException("The user must have a country");
         }

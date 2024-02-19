@@ -29,11 +29,15 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "avatar")
+
+    @OneToOne
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
     private Image avatar;
+
     @Column(name = "country")
     private String country;
-    @Column(name = "favs")
+
+    @OneToMany
     private List<Post> fav;
 
     public User(RequestUser user){
