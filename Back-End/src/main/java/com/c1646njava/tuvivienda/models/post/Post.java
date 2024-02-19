@@ -3,7 +3,7 @@ package com.c1646njava.tuvivienda.models.post;
 import java.util.List;
 
 import com.c1646njava.tuvivienda.models.administrator.Administrator;
-import com.c1646njava.tuvivienda.models.image.Image;
+import com.c1646njava.tuvivienda.models.image.ImagePost;
 import com.c1646njava.tuvivienda.models.user.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ManyToAny;
@@ -46,6 +46,6 @@ public class Post {
     private Administrator administrator;
 
     @OneToMany
-    private List<Image> image;
+    private List<ImagePost> image;
 
 }
