@@ -5,6 +5,7 @@ import com.c1646njava.tuvivienda.models.image.dto.Mensaje;
 import com.c1646njava.tuvivienda.repositories.ImageRepository;
 import com.c1646njava.tuvivienda.services.implementation.CloudinaryServiceImp;
 import com.c1646njava.tuvivienda.services.implementation.ImageServiceImp;
+import com.c1646njava.tuvivienda.services.implementation.ImageUserServiceImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ import java.util.Map;
 public class MainControler {
 
     private final CloudinaryServiceImp cloudinaryServiceImp;
-    private final ImageServiceImp imageServiceImp;
+    private final ImageUserServiceImp imageUserServiceImp;
     private final ImageRepository imageRepository;
 
     @GetMapping("/list")
@@ -43,18 +44,18 @@ public class MainControler {
             new Image((String)result.get("original_filename"),
             (String) result.get("url"),
             (String) result.get("public_id"));
-    imageServiceImp.save(image);
+    imageRepository.save(image);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) throws IOException{
-        if(!imageServiceImp.exists(id)){
+        if(!imageUserServiceImp.exists(id)){
             return new ResponseEntity<>(new Mensaje("The image does not exist"), HttpStatus.NOT_FOUND);
         }
 
-        Image image = imageServiceImp.getOne(id).get();
+        Image image = imageRepository.findById(id).orElse(null);
         Map result = cloudinaryServiceImp.delete(image.getImageId());
-        imageServiceImp.delete(id);
+        imageRepository.deleteById(id);
         return new ResponseEntity<>(new Mensaje("The image has been deleted"), HttpStatus.OK);
     }
 }

@@ -7,6 +7,8 @@ import com.c1646njava.tuvivienda.models.user.dto.ResponseUser;
 import com.c1646njava.tuvivienda.repositories.UserRepository;
 import com.c1646njava.tuvivienda.services.abstraction.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,23 +21,32 @@ public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
     @Override
-    public void registerUser(String name, String password, String password2, String email, String country) throws MyException {
-        validation(name,password,password2,email,country);
+    public ResponseEntity<?> registerUser(String name, String password, String password2, String email, String country) throws MyException {
+        try {
+            // Realizar la validación llamando a tu función validation
+            validation(name, password, password2, email, country);
 
-        User user = new User();
+            // Crear un nuevo usuario
+            User user = new User();
+            user.setName(name);
+            user.setEmail(email);
+            user.setCountry(country);
+            user.setPassword(password);
 
-        user.setName(name);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setCountry(country);
+            // Guardar el usuario en la base de datos
+            User savedUser = userRepository.save(user);
 
-        userRepository.save(user);
-    }
+            // Crear un objeto ResponseUser a partir del usuario guardado
+            ResponseUser responseUser = new ResponseUser(savedUser);
 
-    @Override
-    public ResponseUser registerUserResponse(RequestUser user) {
-        return new ResponseUser(userRepository.save(new User(user)));
-
+            return new ResponseEntity<>(responseUser, HttpStatus.CREATED);
+        } catch (MyException e) {
+            // Manejar la excepción específica, retorna un mensaje de error genérico al usuario
+            return new ResponseEntity<>("Error al registrar el usuario", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            // Manejar excepciones inesperadas, retornar un mensaje genérico al usuario y registrar el error
+            return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
@@ -44,12 +55,13 @@ public class UserServiceImp implements UserService {
                 .orElseThrow(() -> new AuthenticationException("Invalid email or password"));
 
         // 2. Verify the password using a secure hashing algorithm
-        if (password != user.getPassword()) {
+        if (!password.equals(user.getPassword())) {
             throw new AuthenticationException("Invalid email or password");
         }
 
         // 3. Return the authenticated user object
-        return user;    }
+        return user;
+    }
 
 
     @Override
