@@ -28,11 +28,11 @@ public class ImageUserServiceImp implements ImageUserService {
 
 
     @Override
-    public Optional<User> addAvatarToUser(Long id, ImageUser image) {
+    public User addAvatarToUser(Long id, ImageUser image) {
 
         User user = userRepository.findById(id).orElse(null);
         user.setAvatar(image);
-        return Optional.of(user);
+        return user;
     }
 
     @Override

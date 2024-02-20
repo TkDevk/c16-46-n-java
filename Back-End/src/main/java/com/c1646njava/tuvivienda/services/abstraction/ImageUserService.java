@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface ImageUserService {
     Optional<ImageUser> findAvatarByUser(Long id);
 
-    Optional<User> addAvatarToUser(Long id, ImageUser image);
+    User addAvatarToUser(Long id, ImageUser image);
 
     Boolean exists(Long id);
 }

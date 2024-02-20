@@ -30,10 +30,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> userLogin(@RequestBody @Valid RequestUser user) throws AuthenticationException {
+    public ResponseEntity<?> userLogin(@RequestBody @Valid RequestUser requestUser) throws AuthenticationException {
 
-        User userFound = userServiceImp.loginUser(user.email(),user.password());
-        return new ResponseEntity<>(userFound,HttpStatus.OK);
+        User responseUser = userServiceImp.loginUser(requestUser.email(),requestUser.password());
+        return new ResponseEntity<>(responseUser,HttpStatus.OK);
     }
 
 }
