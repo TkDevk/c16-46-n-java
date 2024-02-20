@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import RegisterForm from "./RegisterForm";
 import { HomeContext } from "../../../context/HomeContext";
 
@@ -20,7 +20,7 @@ const LoginForm = () => {
       [name]: value,
     });
   };
-
+const handlerLogin = ()=>{}
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -30,10 +30,10 @@ const LoginForm = () => {
 
   return (
     <div>
-      <h3 className="absolute w-full text-center top-3 text-gray-700 font-bold">
+      <h3 className="absolute  w-full text-center top-3 text-gray-700 font-bold">
         Login
       </h3>
-      <form onSubmit={onSubmit} className="bg-white w-full h-full p-2">
+      <form onSubmit={onSubmit} className=" bg-blue-300 bg-white w-full h-full p-2">
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -81,7 +81,7 @@ const LoginForm = () => {
         </div>
 
         <p className="m-2 text-sm w-full text-center">
-          No tengo una cuenta, 
+         {'No tengo una cuenta, '}    
           <a
             className="text-sky-500 hover:text-#fff"
             href="#"

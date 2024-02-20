@@ -1,4 +1,3 @@
-import { FcHome } from "react-icons/fc";
 import { PiCalendarDuotone } from "react-icons/pi";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { BiMessageRoundedDots } from "react-icons/bi";
@@ -7,6 +6,7 @@ import { CgMenuRound } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { HomeContext } from "../../context/HomeContext";
+import  logo  from "../../assets/Logo.svg"
 
 const sizeFont = "1.5rem";
 
@@ -39,15 +39,13 @@ const NavBar = () => {
   return (
     <>
       <nav
-        className={`absolute top-0 justify-between right-0 w-full h-12vh flex p-3 pr-3 pl-5 z-60`}
+        className={`bg-blue-700 absolute top-0 justify-between right-0 w-full h-12vh flex p-3 pr-3 pl-5 z-60`}
       >
         <section className="flex items-center">
           <a href="./" className="flex">
-            <picture>
-              <FcHome style={{ fontSize: "1.5rem" }} />
-            </picture>
+          <img className="size-12 flex text-blue-300" src={logo} alt="Your SVG" />
             <h1 className="md:text-xl">
-              <span className={`invisible md:visible top-5 pl-4`}>
+              <span className={`text-center text-blue-300 invisible md:visible top-5 pl-4`}>
                 TUVIVIENDA.com
               </span>
             </h1>
@@ -59,7 +57,7 @@ const NavBar = () => {
               <Link
               key={item.name}
                 to={`/${item.name}`}
-                className="cursor-pointer"
+                className=" text-blue-300 cursor-pointer"
                 name={item.name}
                 onClick={handlerOpenSidebar}
               >
