@@ -1,18 +1,34 @@
 package com.c1646njava.tuvivienda.services.abstraction;
 
+import com.c1646njava.tuvivienda.exeptions.PostExceptions.entityCreationException;
+import com.c1646njava.tuvivienda.exeptions.PostExceptions.postNotFoundException;
 import com.c1646njava.tuvivienda.models.post.Post;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public interface PostService {
 
-    Optional<List<Post>> searchByLocation(String address);
+    List<Post> searchByLocation(String address) throws postNotFoundException;
 
-    Optional<List<Post>> searchByType(String type);
-    Optional<List<Post>>searchByBedrooms(Integer bedrooms1);
-    Optional<List<Post>> searchByPrice(Long priceLow,Long PriceHigh);
-    Long crearPost(Post post);
+    List<Post>searchByType(String type) throws postNotFoundException;
+    List<Post> searchByBedrooms(Integer bedrooms1) throws postNotFoundException;
+    List<Post> searchByPrice(Long priceLow,Long PriceHigh) throws postNotFoundException;
+    Post crearPost(Post post) throws entityCreationException ;
+
+    Post findById(Long id) throws postNotFoundException;
+
+
+    String deleteById(Long id) throws postNotFoundException;
+
+    Post putById(Long id, Post post) throws postNotFoundException;
+
+    Post patchById(Long id,  Post fields) throws postNotFoundException, IllegalAccessException;
+
+
+
 }

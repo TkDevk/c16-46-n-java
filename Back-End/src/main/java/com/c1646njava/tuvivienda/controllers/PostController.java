@@ -1,78 +1,84 @@
 package com.c1646njava.tuvivienda.controllers;
 
+import com.c1646njava.tuvivienda.controllers.Abstraction.PostControllerA;
+import com.c1646njava.tuvivienda.exeptions.PostExceptions.entityCreationException;
+import com.c1646njava.tuvivienda.exeptions.PostExceptions.postNotFoundException;
 import com.c1646njava.tuvivienda.models.post.Post;
 import com.c1646njava.tuvivienda.services.abstraction.PostService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/post")
-@AllArgsConstructor
-public class PostController {
-    @Autowired
+public class PostController implements PostControllerA {
+
     private PostService postservicio;
 
+    public PostController(PostService postservicio) {
+        this.postservicio = postservicio;
 
+    }
+
+
+    @GetMapping("/findById/{id}")//*
+    public ResponseEntity<Post> getById(@PathVariable("id") Long id) throws postNotFoundException {
+        return ResponseEntity.ok(postservicio.findById(id));
+    }
+
+
+    @Override
+    @PutMapping("/actualizarAll/{id}")
+    public ResponseEntity<Post> putById(@PathVariable("id") Long id, @Valid @RequestBody Post post) throws postNotFoundException, MethodArgumentNotValidException {
+        return ResponseEntity.ok(postservicio.putById(id,post));
+    }
+
+    @Override
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable("id") Long id) throws postNotFoundException {
+        return ResponseEntity.ok(postservicio.deleteById(id));
+    }
+
+    @Override
+    @PatchMapping("/actualizarCampos/{id}")
+    public ResponseEntity<Post> patchPost(@PathVariable Long id, @Valid @RequestBody Post fields) throws postNotFoundException, MethodArgumentNotValidException, IllegalAccessException {
+        return ResponseEntity.ok(postservicio.patchById(id, fields));
+    }
+
+    @Override
     @GetMapping("/findByName/{address}")
-    public ResponseEntity<?> searchByLocation(@PathVariable String address){
-        Optional<List<Post>> posts = postservicio.searchByLocation(address);
-        if(posts.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay propiedades con la dirección: " + address);
-        }else{
-            return ResponseEntity.ok(posts);
-        }
+    public ResponseEntity<List<Post>> searchByLocation(@PathVariable("address") String address) throws postNotFoundException{
+           return ResponseEntity.ok(postservicio.searchByLocation(address));
     }
-
+    @Override
     @GetMapping("/findByType/{type}")
-    public ResponseEntity<?> searchByType(@PathVariable String type){
-        Optional<List<Post>> posts = postservicio.searchByType(type);
-
-        if(posts.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay propiedades del tipo: " + type);
-        }else{
-            return ResponseEntity.ok(posts);
-        }
+    public ResponseEntity<List<Post>> searchByType(@PathVariable("type") String type) throws postNotFoundException{
+            return ResponseEntity.ok(postservicio.searchByType(type));
     }
-
+    @Override
     @GetMapping("/findByBedrooms/{bedrooms}")
-    public ResponseEntity<?>  searchByBedrooms(@PathVariable Integer bedrooms){
-        Optional<List<Post>> posts = postservicio.searchByBedrooms(bedrooms);
-
-        if(posts.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay propiedades con: " + bedrooms + " habitaciones");
-        }else{
-            return ResponseEntity.ok(posts);
-        }
+    public ResponseEntity<List<Post>> searchByBedrooms(@PathVariable("bedrooms") Integer bedrooms) throws postNotFoundException{
+            return ResponseEntity.ok(postservicio.searchByBedrooms(bedrooms));
     }
-
+    @Override
     @GetMapping("/findByPrice")
-    public ResponseEntity<?>  searchByPrice(@RequestParam(name = "lowprice") Long lowprice, @RequestParam(name = "highprice") Long highprice){
-        Optional<List<Post>> posts = postservicio.searchByPrice(lowprice, highprice);
-
-        if(posts.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay propiedades con un precio entre " + lowprice + " - " + highprice);
-        }else{
-            return ResponseEntity.ok(posts);
-        }
+    public ResponseEntity<List<Post>>  searchByPrice(@RequestParam(name = "lowprice") Long lowprice, @RequestParam(name = "highprice") Long highprice)
+            throws postNotFoundException
+    {
+        return ResponseEntity.ok(postservicio.searchByPrice(lowprice, highprice));
 
     }
-
-    @PostMapping("/create")
-    public ResponseEntity<?> createPost( @Valid @RequestBody Post post){
-        Long id = postservicio.crearPost(post);
-        if(id != null){
-            return ResponseEntity.ok(id);
-        }else{
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Atributos invalidos del post");
-
-        }
+    @Override
+    @PostMapping("/create") //*
+    public ResponseEntity<Post> createPost( @Valid @RequestBody Post post) throws entityCreationException, MethodArgumentNotValidException{
+        return ResponseEntity.ok(postservicio.crearPost(post));
 
     }
 
