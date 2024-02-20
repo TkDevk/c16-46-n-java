@@ -47,7 +47,7 @@ public class UserServiceTest {
     @Test
     @DisplayName("Test registering a user with invalid email format")
     void registerUser_InvalidEmail_Failure() {
-        // Test logic here
+        // ?
     }
 
     @Test
@@ -140,5 +140,25 @@ public class UserServiceTest {
     }
 
     //-------------------------------------------------------------------
+
+    @Test
+    @DisplayName("Login with valid credentials should return user object")
+    public void testLoginWithValidCredentials() {
+        // Arrange
+    }
+
+    @Test
+    @DisplayName("Login with invalid email should throw AuthenticationException")
+    public void testLoginWithInvalidEmail() {
+        // Arrange
+    }
+
+    @Test
+    @DisplayName("Login with invalid password should throw AuthenticationException")
+    public void testLoginWithInvalidPassword() {
+        // Arrange
+    }
+
+    //-----------------------------------------------------------------------------
 
 }
