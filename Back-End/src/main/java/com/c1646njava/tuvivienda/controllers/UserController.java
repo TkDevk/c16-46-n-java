@@ -25,7 +25,7 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody RequestUser requestUser) throws MyException {
 
         ResponseEntity<?> responseUser = userServiceImp.registerUser(requestUser.name(), requestUser.email(), requestUser.password(), requestUser.password2(), requestUser.country());
-        return new ResponseEntity<>(responseUser, HttpStatus.CREATED);
+        return responseUser;
 
     }
 

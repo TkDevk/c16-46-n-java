@@ -40,12 +40,9 @@ public class UserServiceImp implements UserService {
             ResponseUser responseUser = new ResponseUser(savedUser);
 
             return new ResponseEntity<>(responseUser, HttpStatus.CREATED);
-        } catch (MyException e) {
+        } catch (IllegalArgumentException e) {
             // Manejar la excepción específica, retorna un mensaje de error genérico al usuario
             return new ResponseEntity<>("Error al registrar el usuario", HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            // Manejar excepciones inesperadas, retornar un mensaje genérico al usuario y registrar el error
-            return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
