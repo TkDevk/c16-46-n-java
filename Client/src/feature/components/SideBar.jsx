@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import LoginForm from "./forms/LoginForm";
 import { Route, Routes } from "react-router-dom"
@@ -16,13 +16,13 @@ const SideBar = () => {
 
   return (
     <aside
-      className={`fixed z-10 bg-white top-[10vh] right-0 z-40 md:w-2/5 lg:w-1/4 w-10/12 h-screen shadow-lg duration-500 p-4 transition-transform ${
+      className={`fixed bg-blue-300 rounded z-10 bg-white top-[10vh] "translate-x-full" right-0 z-40 md:w-2/5 lg:w-1/4 w-10/12 h-screen shadow-lg duration-500 p-4 transition-transform ${
         sidebarVisible ? "" : "translate-x-full"
       }`}
     >
       {/* CLOSE BUTTON */}
       <button
-        className="absolute top-2 rounded-full bg-gray-200 z-10"
+        className="bg-blue-300 absolute top-2 rounded-full bg-gray-200 z-10"
         onClick={handlerCloseSideBar}
       >
         <IoCloseCircleOutline style={{fontSize:'1.5rem', zIndex:'0'}}/>

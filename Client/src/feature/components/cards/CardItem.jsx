@@ -1,15 +1,16 @@
-import React from "react";
+//import React from "react";
 /* LIKE */
 import { BiLike } from "react-icons/bi";
-import { BiSolidLike } from "react-icons/bi";
+//import { BiSolidLike } from "react-icons/bi";
 /* STARS */
 import { CiStar } from "react-icons/ci";
-import { FaStar } from "react-icons/fa";
+//import { FaStar } from "react-icons/fa";
 
 const CardItem = () => {
   return (
-    <div className="lg:w-1/5 relative w-1/2 md:w-1/3 rounded overflow-hidden m-2">
-      <div>
+    <div className="bg-blue-700 lg:w-1/5 relative w-1/2 md:w-1/3 rounded overflow-hidden m-2">
+     <a href="./id" >
+      <div >
         {/* IMAGE RESOURCE */}
         <img
           className="w-full"
@@ -41,6 +42,7 @@ const CardItem = () => {
           Publicaciones más vistas.
         </span>
       </div>
+      </a>
     </div>
   );
 };

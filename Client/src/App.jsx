@@ -7,7 +7,7 @@ import CardItem from "./feature/components/cards/CardItem";
 function App() {
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="bg-blue-300 w-full h-full flex flex-col">
       <div className="w-full">
         <NavBar />
         <SideBar />
