@@ -1,6 +1,20 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
+import { usersReducer } from "../reducers/usersReducer";
+
+const initialPost = []
+
+const initialUserData = {
+  id: 0,
+  username: "",
+  email: "",
+  password: ""
+}
+
+const initialError = {}
 
 export const useHome = () => {
+
+  const [user, dispatch] = useReducer(usersReducer, initialUserData);
 
   const [isRegisterOpen, setRegisterOpen] = useState(false)
   const [sidebarVisible, setSidebarVisible] = useState(false);
