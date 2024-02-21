@@ -1,14 +1,10 @@
 package com.c1646njava.tuvivienda.services.implementation;
 
-import com.c1646njava.tuvivienda.exeptions.MyException;
 import com.c1646njava.tuvivienda.models.user.User;
 import com.c1646njava.tuvivienda.models.user.dto.RequestUser;
-import com.c1646njava.tuvivienda.models.user.dto.ResponseUser;
 import com.c1646njava.tuvivienda.repositories.UserRepository;
 import com.c1646njava.tuvivienda.services.abstraction.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,40 +16,28 @@ import javax.naming.AuthenticationException;
 public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
+
     @Override
-    public ResponseEntity<?> registerUser(String name, String password, String password2, String email, String country) throws MyException {
-        try {
-            // Realizar la validación llamando a tu función validation
-            validation(name, password, password2, email, country);
+    public User registerUser(RequestUser requestUser) {
+        validateUserRequest(requestUser);
+        User user = new User();
 
-            // Crear un nuevo usuario
-            User user = new User();
-            user.setName(name);
-            user.setEmail(email);
-            user.setCountry(country);
-            user.setPassword(password);
+        user.setName(requestUser.name());
+        user.setEmail(requestUser.email());
+        user.setCountry(requestUser.country());
+        user.setPassword(requestUser.password());
 
-            // Guardar el usuario en la base de datos
-            User savedUser = userRepository.save(user);
-
-            // Crear un objeto ResponseUser a partir del usuario guardado
-            ResponseUser responseUser = new ResponseUser(savedUser);
-
-            return new ResponseEntity<>(responseUser, HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            // Manejar la excepción específica, retorna un mensaje de error genérico al usuario
-            return new ResponseEntity<>("Error al registrar el usuario", HttpStatus.BAD_REQUEST);
-        }
+        return userRepository.save(user);
     }
 
     @Override
     public User loginUser(String email, String password) throws AuthenticationException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new AuthenticationException("Invalid email or password"));
+                .orElseThrow(() -> new AuthenticationException("Invalid email"));
 
         // 2. Verify the password using a secure hashing algorithm
         if (!password.equals(user.getPassword())) {
-            throw new AuthenticationException("Invalid email or password");
+            throw new AuthenticationException("Invalid password");
         }
 
         // 3. Return the authenticated user object
@@ -71,7 +55,14 @@ public class UserServiceImp implements UserService {
         return null;
     }
 
-    private void validation(String name, String password,String password2, String email, String country) throws MyException {
+    @Override
+    public void validateUserRequest(RequestUser requestUser) {
+        String name = requestUser.name();
+        String password = requestUser.password();
+        String password2 = requestUser.password2();
+        String email = requestUser.email();
+        String country = requestUser.country();
+
         if(name.isBlank()){
             throw new IllegalArgumentException("The user must have a name");
         }
@@ -84,7 +75,7 @@ public class UserServiceImp implements UserService {
         if(email.isBlank()){
             throw new IllegalArgumentException("The user must have a email");
         }
-        if(userRepository.findByEmail(email)!=null){
+        if(userRepository.findByEmail(email).isPresent()){
             throw new IllegalArgumentException("The email is in use");
         }
         if(country.isBlank()){

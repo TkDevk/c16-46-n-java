@@ -1,12 +1,10 @@
 package com.c1646njava.tuvivienda.models.user.dto;
 
-import com.c1646njava.tuvivienda.models.image.Image;
 import com.c1646njava.tuvivienda.models.image.ImageUser;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 public record RequestUser(
         @NotBlank(message = "El nombre es obligatorio")
@@ -27,6 +25,5 @@ public record RequestUser(
         @NotBlank(message = "El país es obligatorio")
         String country,
         ImageUser avatar
-
 ) {
 }
