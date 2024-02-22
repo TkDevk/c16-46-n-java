@@ -49,11 +49,11 @@ public class UserServiceImp implements UserService {
     @Override
     public User loginUser(String email, String password) throws AuthenticationException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new AuthenticationException("Invalid email or password"));
+                .orElseThrow(() -> new AuthenticationException("Invalid email"));
 
         // 2. Verify the password using a secure hashing algorithm
         if (!password.equals(user.getPassword())) {
-            throw new AuthenticationException("Invalid email or password");
+            throw new AuthenticationException("Invalid password");
         }
 
         // 3. Return the authenticated user object
@@ -71,7 +71,7 @@ public class UserServiceImp implements UserService {
         return null;
     }
 
-    private void validation(String name, String password,String password2, String email, String country) throws MyException {
+    public void validation(String name, String password,String password2, String email, String country) throws MyException {
         if(name.isBlank()){
             throw new IllegalArgumentException("The user must have a name");
         }
@@ -91,4 +91,5 @@ public class UserServiceImp implements UserService {
             throw new IllegalArgumentException("The user must have a country");
         }
     }
+
 }

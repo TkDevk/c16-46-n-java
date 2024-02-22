@@ -22,7 +22,9 @@ public class UserController {
     private final UserServiceImp userServiceImp;
     private final UserRepository userRepository;
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(@RequestBody RequestUser requestUser) throws MyException {
+    public ResponseEntity<?> createUser(@RequestBody RequestUser requestUser) {
+
+            userServiceImp.validation(requestUser.name(), requestUser.email(), requestUser.password(), requestUser.password2(), requestUser.country(), requestUser.avatar());
 
         ResponseEntity<?> responseUser = userServiceImp.registerUser(requestUser.name(), requestUser.email(), requestUser.password(), requestUser.password2(), requestUser.country());
         return responseUser;

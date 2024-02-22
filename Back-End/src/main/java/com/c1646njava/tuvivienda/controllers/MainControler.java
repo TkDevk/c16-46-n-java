@@ -34,7 +34,7 @@ public class MainControler {
         return new ResponseEntity<>(images, HttpStatus.OK);
     }
 @PostMapping("/upload_user_avatar")
-    public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile) throws IOException{
+    public ResponseEntity<?> uploadAvatar(@RequestParam MultipartFile multipartFile) throws IOException{
     BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
     if(bi == null){
         return new ResponseEntity<>(new Mensaje("No valid image"), HttpStatus.BAD_REQUEST);
