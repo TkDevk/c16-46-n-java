@@ -1,10 +1,8 @@
 package com.c1646njava.tuvivienda.controllers;
 
-import com.c1646njava.tuvivienda.exeptions.MyException;
 import com.c1646njava.tuvivienda.models.user.User;
 import com.c1646njava.tuvivienda.models.user.dto.RequestUser;
 import com.c1646njava.tuvivienda.models.user.dto.ResponseUser;
-import com.c1646njava.tuvivienda.repositories.UserRepository;
 import com.c1646njava.tuvivienda.services.implementation.UserServiceImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
@@ -20,22 +17,26 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserServiceImp userServiceImp;
-    private final UserRepository userRepository;
+
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(@RequestBody RequestUser requestUser) {
 
-            userServiceImp.validation(requestUser.name(), requestUser.email(), requestUser.password(), requestUser.password2(), requestUser.country(), requestUser.avatar());
+    public ResponseEntity<?> createUser(@RequestBody RequestUser requestUser){
+        try {
+            User user = userServiceImp.registerUser(requestUser);
 
-        ResponseEntity<?> responseUser = userServiceImp.registerUser(requestUser.name(), requestUser.email(), requestUser.password(), requestUser.password2(), requestUser.country());
-        return responseUser;
-
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseUser(user));
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> userLogin(@RequestBody @Valid RequestUser requestUser) throws AuthenticationException {
-
-        User responseUser = userServiceImp.loginUser(requestUser.email(),requestUser.password());
-        return new ResponseEntity<>(responseUser,HttpStatus.OK);
+    public ResponseEntity<?> userLogin(@RequestParam String email, @RequestParam String password) throws AuthenticationException {
+         try{
+             User user = userServiceImp.loginUser(email,password);
+             return ResponseEntity.status(HttpStatus.OK).body(user);
+         }catch (AuthenticationException e){
+             return ResponseEntity.status((HttpStatus.UNAUTHORIZED)).body(e.getMessage());
+         }
     }
-
 }

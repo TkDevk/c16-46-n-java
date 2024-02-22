@@ -6,6 +6,7 @@ import com.c1646njava.tuvivienda.models.user.User;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
 public record ResponseUser(
         Long id,
 
