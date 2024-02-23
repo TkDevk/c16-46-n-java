@@ -1,6 +1,7 @@
 package com.c1646njava.tuvivienda.controllers;
 
 import com.c1646njava.tuvivienda.models.user.User;
+import com.c1646njava.tuvivienda.models.user.dto.RequestLogin;
 import com.c1646njava.tuvivienda.models.user.dto.RequestUser;
 import com.c1646njava.tuvivienda.models.user.dto.ResponseUser;
 import com.c1646njava.tuvivienda.services.implementation.UserServiceImp;
@@ -31,10 +32,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> userLogin(@RequestParam String email, @RequestParam String password) throws AuthenticationException {
+    public ResponseEntity<?> userLogin(@RequestBody RequestLogin requestLogin) throws AuthenticationException {
          try{
-             User user = userServiceImp.loginUser(email,password);
-             return ResponseEntity.status(HttpStatus.OK).body(user);
+             User user = userServiceImp.loginUser(requestLogin.email(),requestLogin.password());
+             return ResponseEntity.status(HttpStatus.OK).body(userServiceImp.loginUser(requestLogin.email(),requestLogin.password()));
          }catch (AuthenticationException e){
              return ResponseEntity.status((HttpStatus.UNAUTHORIZED)).body(e.getMessage());
          }
