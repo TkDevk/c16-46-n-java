@@ -2,35 +2,70 @@ import { useContext, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { HomeContext } from "../../../context/HomeContext";
 
+// INITIAL OBJECT VALUES
+const initialRegisterData = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  password2: "",
+  country: "",
+};
+
+const initialErrors = {
+  nameError: "",
+  emailError: "",
+  passwordError: "",
+  countryError: "",
+};
+
 const RegisterForm = () => {
   // taken from context
-  const { isRegisterOpen, handlerRegisterClose } = useContext(HomeContext);
+  const { isRegisterOpen, handlerRegisterClose, handlerRegisterUser } =
+    useContext(HomeContext);
 
-  const [inputName, setInputName] = useState("");
-  const [inputLastName, setInputLastName] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
+  // all user fields
+  const [registerForm, setRegisterForm] = useState(initialRegisterData);
+  const { firstName, lastName, email, password, password2, country } =
+    registerForm;
+
+  const [errors, setErrors] = useState(initialErrors);
+
+  const handlerError = (input, message) => {
+    setErrors({
+      ...errors,
+      [input]: message,
+    });
+  };
+
+  const onInputChange = ({ target }) => {
+    const { name, value } = target;
+
+    setRegisterForm({
+      ...registerForm,
+      [name]: value,
+    });
+  };
 
   //    const [inputLocation, setInputLocation] = useState('');
   const onSubmit = (e) => {
-    if (inputName && inputEmail && inputLastName) {
-      e.preventDefault();
-      setInputName("");
-      setInputEmail("");
-      setInputLastName("");
-    } else {
-      alert("Por favor introduce la informacion requerida");
-    }
-  };
+    e.preventDefault();
 
-  const handleName = (e) => {
-    setInputName(e.target.value);
-  };
+    if (firstName && lastName && email && password && password2 && country) {
+      if (password !== password2) {
+        console.log("Las contraseñas no coinciden!");
+        // sending error type to object
+        handlerError("passwordError", "Las contraseñas no coinciden!");
+        console.log("error obj: ", errors);
+        return;
+      }
 
-  const handleEmail = (e) => {
-    setInputEmail(e.target.value);
-  };
-  const handleLastName = (e) => {
-    setInputLastName(e.target.value);
+      handlerRegisterUser(registerForm);
+      // clear data
+      setRegisterForm(initialRegisterData);
+      // and close modal
+      handlerRegisterClose();
+    } else console.log("Completa todos los campos para hacer el registro!");
   };
 
   return (
@@ -41,7 +76,7 @@ const RegisterForm = () => {
     >
       <form
         onSubmit={onSubmit}
-        className="w-3/4 py-4 bg-white border border-neutral-400 shadow-lg shadow-neutral-400 flex flex-col
+        className="w-3/4 lg:w-2/4 py-4 my-4 bg-white border border-neutral-400 shadow-lg shadow-neutral-400 flex flex-col
         lg:p-4 gap-4 bg-#fff rounded r-0 z-30 overflow-y-auto"
       >
         <IoCloseCircleOutline
@@ -50,7 +85,7 @@ const RegisterForm = () => {
           className="mx-4"
         />
 
-        <section className="flex flex-wrap lg:mb-6">
+        <section className="flex flex-wrap lg:mb-2">
           <article className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -60,16 +95,19 @@ const RegisterForm = () => {
             </label>
 
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 ${
+                errors.nameError && "border border-red-500"
+              } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
               id="grid-first-name"
+              name="firstName"
               placeholder="Nombre..."
               type="text"
-              value={inputName}
-              onChange={handleName}
+              value={firstName}
+              onChange={onInputChange}
             />
-            <p className="text-red-500 text-xs italic">
+            {/* <p className="text-red-500 text-xs italic">
               Por favor llena este espacio.
-            </p>
+            </p> */}
           </article>
           <article className="w-full md:w-1/2 px-3">
             <label
@@ -79,16 +117,19 @@ const RegisterForm = () => {
               Apellido
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 ${
+                errors.nameError && "border border-red-500"
+              } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
               id="grid-last-name"
+              name="lastName"
               placeholder="Apellido..."
               type="text"
-              value={inputLastName}
-              onChange={handleLastName}
+              value={lastName}
+              onChange={onInputChange}
             />
           </article>
         </section>
-        <section className="flex flex-wrap lg:mb-6">
+        <section className="flex flex-wrap lg:mb-2">
           <article className="w-full px-3">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -97,19 +138,23 @@ const RegisterForm = () => {
               Email
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 ${
+                errors.emailError && "border border-red-500"
+              } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
               id="grid-password"
               name="email"
               placeholder="Email..."
               type="text"
-              value={inputEmail}
-              onChange={handleEmail}
+              value={email}
+              onChange={onInputChange}
             />
-            <p className="text-gray-600 text-xs italic">Introduce tu email</p>
+            {errors && errors.emailError && (
+              <p className="text-red-500 text-xs italic">Introduce tu email</p>
+            )}
           </article>
         </section>
-        <section className="flex flex-wrap lg:mb-6">
-          <article className="w-full px-3">
+        <section className="flex flex-wrap lg:mb-2">
+          <article className="w-full md:w-1/2 px-3">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="grid-password"
@@ -117,19 +162,53 @@ const RegisterForm = () => {
               Contraseña
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              name="password"
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 ${
+                errors.passwordError && "border border-red-500"
+              } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
               type="password"
+              onChange={onInputChange}
+              value={password}
               placeholder="******************"
             />
-            <p className="text-gray-600 text-xs italic">
-              Digita una contraseña
-            </p>
+            {errors && errors.passwordError && (
+              <p className="text-red-500 text-xs italic">
+                {errors.passwordError}
+              </p>
+            )}
+          </article>
+
+          <article className="w-full md:w-1/2 px-3">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-password"
+            >
+              Comfirmar contraseña
+            </label>
+            <input
+              name="password2"
+              className={`appearance-none block w-full bg-gray-200 text-gray-700 ${
+                errors.passwordError && "border border-red-500"
+              } rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
+              type="password"
+              onChange={onInputChange}
+              value={password2}
+              placeholder="******************"
+            />
+            {errors && errors.passwordError && (
+              <p className="text-red-500 text-xs italic">
+                {errors.passwordError}
+              </p>
+            )}
           </article>
         </section>
-        <section className="flex flex-wrap mb-2 justify-between w-full">
+        <section className="flex flex-wrap justify-between w-full">
           <article className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <article className="relative ">
               <select
+                name="country"
+                value={country}
+                onChange={onInputChange}
                 className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-state"
               >

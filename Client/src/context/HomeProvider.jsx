@@ -10,6 +10,8 @@ const HomeProvider = ({ children }) => {
     handlerCloseSideBar,
     handlerRegisterOpen,
     handlerRegisterClose,
+    handlerRegisterUser,
+    handlerLoginUser
   } = useHome();
 
   return (
@@ -21,6 +23,8 @@ const HomeProvider = ({ children }) => {
         handlerCloseSideBar,
         handlerRegisterOpen,
         handlerRegisterClose,
+        handlerRegisterUser,
+        handlerLoginUser
       }}
     >
       {children}

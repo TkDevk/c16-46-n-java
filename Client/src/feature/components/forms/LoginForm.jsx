@@ -8,7 +8,7 @@ const initialLoginForm = {
 };
 
 const LoginForm = () => {
-  const { handlerRegisterOpen } = useContext(HomeContext);
+  const { handlerRegisterOpen, handlerLoginUser } = useContext(HomeContext);
   const [loginForm, setLoginForm] = useState(initialLoginForm);
   const { email, password } = loginForm;
 
@@ -20,12 +20,14 @@ const LoginForm = () => {
       [name]: value,
     });
   };
-const handlerLogin = ()=>{}
+
   const onSubmit = (e) => {
     e.preventDefault();
 
+    console.log("user data: ", loginForm)
+
     if (!email || !password) console.log("Los campos no deben ir vacios!");
-    else handlerLogin({ email, password });
+    else handlerLoginUser(loginForm);
   };
 
   return (
@@ -33,7 +35,10 @@ const handlerLogin = ()=>{}
       <h3 className="absolute  w-full text-center top-3 text-gray-700 font-bold">
         Login
       </h3>
-      <form onSubmit={onSubmit} className=" bg-blue-300 bg-white w-full h-full p-2">
+      <form
+        onSubmit={onSubmit}
+        className=" bg-blue-300 bg-white w-full h-full p-2"
+      >
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -42,9 +47,12 @@ const handlerLogin = ()=>{}
             Correo
           </label>
           <input
-            className={`shadow appearance-none border ${!email ? 'border-red-500': ''} rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
-            id="email"
+            className={`shadow appearance-none border ${
+              !email ? "border-red-500" : ""
+            } rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
+            name="email"
             type="text"
+            value={email}
             placeholder="tucorreo@ejemplo.com"
             onChange={onInputChange}
           />
@@ -57,9 +65,12 @@ const handlerLogin = ()=>{}
             Contraseña
           </label>
           <input
-            className={`shadow appearance-none border ${!password && 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
-            id="password"
+            className={`shadow appearance-none border ${
+              !password && "border-red-500"
+            } rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
+            name="password"
             type="password"
+            value={password}
             placeholder="*************"
             onChange={onInputChange}
           />
@@ -81,11 +92,11 @@ const handlerLogin = ()=>{}
         </div>
 
         <p className="m-2 text-sm w-full text-center">
-         {'No tengo una cuenta, '}    
+          {"No tengo una cuenta, "}
           <a
             className="text-sky-500 hover:text-#fff"
             href="#"
-            onClick={() => handlerRegisterOpen()}
+            onClick={handlerRegisterOpen}
           >
             Registrarme.
           </a>

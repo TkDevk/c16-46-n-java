@@ -14,12 +14,13 @@ import javax.naming.AuthenticationException;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@CrossOrigin
 public class UserController {
 
     private final UserServiceImp userServiceImp;
 
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(@RequestBody RequestUser requestUser){
+    public ResponseEntity<?> createUser(@RequestBody RequestUser requestUser) {
         try {
             User user = userServiceImp.registerUser(requestUser);
 
