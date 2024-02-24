@@ -1,5 +1,6 @@
 import CardMesagge from "../cards/CardMesagge"
 
+
 const Messages = ()=>{
     return (
         <>
@@ -9,7 +10,9 @@ const Messages = ()=>{
             {/* JUST FOR TESTING --> DELETE LATER */}
             <CardMesagge />
             <CardMesagge />
+
           </div>
+          <button className="w-full absolute bottom-[10svh] bg-sky-900 text-white p-1"> Ir al Chat</button>
         </>
     )
 }

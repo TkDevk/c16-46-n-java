@@ -4,6 +4,8 @@ import SideBar from "./feature/components/SideBar";
 import SearchBar from "./feature/components/SearchBar";
 import CardItem from "./feature/components/cards/CardItem";
 
+
+
 function App() {
 
   return (
@@ -16,6 +18,7 @@ function App() {
       <div className="w-full mt-20">
         <SearchBar />
         <CardItem />
+     
       </div>
     </div>
   );
