@@ -10,9 +10,6 @@ import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificationExecutor<Post> {
 
-
-
-
     @Query("SELECT p FROM Post p WHERE p.address = LOWER(:address1)")
     Optional<List<Post>> searchByLocation(String address);
 

@@ -3,7 +3,7 @@ package com.c1646njava.tuvivienda.models.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.c1646njava.tuvivienda.models.image.Image;
+import com.c1646njava.tuvivienda.models.image.ImageUser;
 import com.c1646njava.tuvivienda.models.post.Post;
 
 import com.c1646njava.tuvivienda.models.user.dto.RequestUser;
@@ -32,7 +32,7 @@ public class User {
 
     @OneToOne
     @JoinColumn(name = "image_id", referencedColumnName = "id")
-    private Image avatar;
+    private ImageUser avatar;
 
     @Column(name = "country")
     private String country;
@@ -44,7 +44,7 @@ public class User {
         this.name = user.name();
         this.email = user.email();
         this.password = user.password();
-        this.avatar =  user.avatar();
+        this.avatar = (ImageUser) user.avatar();
         this.country = user.country();
         this.fav = new ArrayList<>();
     }

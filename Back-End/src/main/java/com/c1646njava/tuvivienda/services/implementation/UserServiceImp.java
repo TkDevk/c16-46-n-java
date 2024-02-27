@@ -1,9 +1,7 @@
 package com.c1646njava.tuvivienda.services.implementation;
 
-import com.c1646njava.tuvivienda.exeptions.MyException;
 import com.c1646njava.tuvivienda.models.user.User;
 import com.c1646njava.tuvivienda.models.user.dto.RequestUser;
-import com.c1646njava.tuvivienda.models.user.dto.ResponseUser;
 import com.c1646njava.tuvivienda.repositories.UserRepository;
 import com.c1646njava.tuvivienda.services.abstraction.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,38 +16,33 @@ import javax.naming.AuthenticationException;
 public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
-    @Override
-    public void registerUser(String name, String password, String password2, String email, String country) throws MyException {
-        validation(name,password,password2,email,country);
 
+    @Override
+    public User registerUser(RequestUser requestUser) {
+        validateUserRequest(requestUser);
         User user = new User();
 
-        user.setName(name);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setCountry(country);
+        user.setName(requestUser.name());
+        user.setEmail(requestUser.email());
+        user.setCountry(requestUser.country());
+        user.setPassword(requestUser.password());
 
-        userRepository.save(user);
-    }
-
-    @Override
-    public ResponseUser registerUserResponse(RequestUser user) {
-        return new ResponseUser(userRepository.save(new User(user)));
-
+        return userRepository.save(user);
     }
 
     @Override
     public User loginUser(String email, String password) throws AuthenticationException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new AuthenticationException("Invalid email or password"));
+                .orElseThrow(() -> new AuthenticationException("Invalid email"));
 
         // 2. Verify the password using a secure hashing algorithm
-        if (password != user.getPassword()) {
-            throw new AuthenticationException("Invalid email or password");
+        if (!password.equals(user.getPassword())) {
+            throw new AuthenticationException("Invalid password");
         }
 
         // 3. Return the authenticated user object
-        return user;    }
+        return user;
+    }
 
 
     @Override
@@ -62,7 +55,15 @@ public class UserServiceImp implements UserService {
         return null;
     }
 
-    private void validation(String name, String password,String password2, String email, String country) throws MyException {
+
+    @Override
+    public void validateUserRequest(RequestUser requestUser) {
+        String name = requestUser.name();
+        String password = requestUser.password();
+        String password2 = requestUser.password2();
+        String email = requestUser.email();
+        String country = requestUser.country();
+
         if(name.isBlank()){
             throw new IllegalArgumentException("The user must have a name");
         }
@@ -75,11 +76,12 @@ public class UserServiceImp implements UserService {
         if(email.isBlank()){
             throw new IllegalArgumentException("The user must have a email");
         }
-        if(userRepository.findByEmail(email)!=null){
+        if(userRepository.findByEmail(email).isPresent()){
             throw new IllegalArgumentException("The email is in use");
         }
         if(country.isBlank()){
             throw new IllegalArgumentException("The user must have a country");
         }
     }
+
 }
