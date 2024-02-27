@@ -26,5 +26,9 @@ public class ImagePostServiceImp implements ImagePostService {
     public List<ImagePost> findImagesByPost(Long id) {
             Optional<Post> post = postRepository.findById(id);
             return imagePostRepository.findById(id).get().getPost().getImage();
-        }
+
+
+    }
+
+
 }

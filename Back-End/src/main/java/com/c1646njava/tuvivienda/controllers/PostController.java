@@ -43,10 +43,8 @@ public class PostController implements PostControllerA {
         Page<Post> posts = postservicio.searchByFilter(filterDTOList,pageable);
         if(!posts.isEmpty()){
             return ResponseEntity.ok(posts);
-
         }else{
             throw new postNotFoundException("There isn't a post with the indicate values");
-
         }
     }
 

@@ -12,14 +12,14 @@ public class Patcher {
         Class<?> postClass= Post.class;
         Field[] postFields=postClass.getDeclaredFields();
         for(Field field : postFields){
-            //Cambiar el atributo de clase de privado a público
+            //private to public
             field.setAccessible(true);
 
             Object value=field.get(incompleteIntern);
             if(value!=null){
                 field.set(existingIntern,value);
             }
-            //Cambiar el atributo de clase de público a privado
+            //public to private
             field.setAccessible(false);
         }
 
