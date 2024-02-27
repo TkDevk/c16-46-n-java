@@ -1,4 +1,4 @@
-package com.c1646njava.tuvivienda.DTO.Patcher;
+package com.c1646njava.tuvivienda.exeptions.dto.Patcher;
 
 import com.c1646njava.tuvivienda.models.post.Post;
 import org.springframework.stereotype.Component;

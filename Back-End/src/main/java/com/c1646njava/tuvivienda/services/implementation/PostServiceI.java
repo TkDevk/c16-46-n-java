@@ -1,23 +1,23 @@
 package com.c1646njava.tuvivienda.services.implementation;
 
-import com.c1646njava.tuvivienda.DTO.Patcher.Patcher;
+import com.c1646njava.tuvivienda.exeptions.dto.Patcher.Patcher;
 import com.c1646njava.tuvivienda.exeptions.PostExceptions.entityCreationException;
 import com.c1646njava.tuvivienda.exeptions.PostExceptions.postNotFoundException;
+import com.c1646njava.tuvivienda.models.post.DTO.FilterDTO;
+import com.c1646njava.tuvivienda.models.post.DTO.PostSpecification;
 import com.c1646njava.tuvivienda.models.post.Post;
 import com.c1646njava.tuvivienda.repositories.PostRepository;
 import com.c1646njava.tuvivienda.services.abstraction.PostService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.ui.Model;
 
-import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @Service
 public class PostServiceI implements PostService {
@@ -31,49 +31,10 @@ public class PostServiceI implements PostService {
         this.patcher = patcher;
     }
 
-    @Override
-    public List<Post> searchByLocation(String address) throws postNotFoundException {
-        Optional<List<Post>> listaposts = postrepositorio.searchByLocation(address);
-        if(listaposts.isPresent()){
-            return listaposts.get();
-        }else{
-            throw new postNotFoundException("No hay publicaciones con la dirección: " + address);
 
-        }
-    }
+    public Page<Post> searchByFilter(List<FilterDTO> filterDtoList, Pageable pageable){
+        return postrepositorio.findAll(PostSpecification.columnEqual(filterDtoList),pageable);
 
-    @Override
-    public List<Post> searchByType(String type) throws postNotFoundException {
-        Optional<List<Post>> listaposts = postrepositorio.searchByType(type);
-        if(listaposts.isPresent()){
-            return listaposts.get();
-        }else{
-            throw new postNotFoundException("No hay publicaciones de tipo: " + type);
-
-        }
-
-    }
-
-    @Override
-    public List<Post>  searchByBedrooms(Integer bedrooms1) throws postNotFoundException{
-        Optional<List<Post>> listaposts = postrepositorio.searchByBedrooms(bedrooms1);
-        if(listaposts.isPresent()){
-            return listaposts.get();
-        }else{
-            throw new postNotFoundException("No hay publicaciones con " + bedrooms1 + " habitaciones");
-
-        }
-    }
-
-    @Override
-    public List<Post> searchByPrice(Long priceLow, Long PriceHigh) throws postNotFoundException {
-        Optional<List<Post>> listaposts = postrepositorio.searchByPrice(priceLow,PriceHigh);
-        if(listaposts.isPresent()){
-            return listaposts.get();
-        }else{
-            throw new postNotFoundException("No hay publicaciones dentro de ese rango de precios ");
-
-        }
     }
 
     public Post crearPost(Post post) throws entityCreationException{
@@ -83,7 +44,7 @@ public class PostServiceI implements PostService {
         if(posteo.isPresent()){
             return posteo.get();
         }else{
-            throw new entityCreationException("La entidad no fue persistida correctamente");
+            throw new entityCreationException("the entity was not persisted correctly");
         }
     }
 
@@ -93,7 +54,7 @@ public class PostServiceI implements PostService {
         if(posteo.isPresent()){
             return posteo.get();
         }else{
-            throw new postNotFoundException("No existe un elemento con id: " + id);
+            throw new postNotFoundException("there isn't a post with the id: " + id);
         }
     }
 
@@ -104,7 +65,7 @@ public class PostServiceI implements PostService {
             postrepositorio.deleteById(id);
             return "Post eliminado";
         }else{
-            throw new postNotFoundException("No existe un elemento con id: " + id);
+            throw new postNotFoundException("there isn't a post with the id: " + id);
         }
 
     }
@@ -114,11 +75,11 @@ public class PostServiceI implements PostService {
         Optional<Post> posteo = postrepositorio.findById(id);
         if(posteo.isPresent()){
             Post postinner = posteo.get();
-            BeanUtils.copyProperties(postinner,post);
-            postrepositorio.save(postinner);
-            return postinner;
+            BeanUtils.copyProperties(post,postinner, "id");
+            postrepositorio.save(post);
+            return post;
         }else{
-            throw new postNotFoundException("No existe un elemento con id: " + id);
+            throw new postNotFoundException("there isn't a post with the id: " + id);
         }
     }
 
@@ -133,13 +94,27 @@ public class PostServiceI implements PostService {
                 postrepositorio.save(postExistente);
                 return postExistente;
             }catch(IllegalAccessException e){
-                throw new IllegalAccessException("Problema al ejecutar la reflexividad");
+                throw new IllegalAccessException("Issue trying to execute reflexivity in Post class");
             }
         }else{
-            throw new postNotFoundException("No existe un post con la id: " + id);
+            throw new postNotFoundException("there isn't a post with the id: " + id);
 
         }
-
-
     }
+
+    @Override
+    public Page<Post> getAll( Pageable pageable){
+        return postrepositorio.findAll(pageable);
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -1,4 +1,4 @@
-package com.c1646njava.tuvivienda.DTO.Errors;
+package com.c1646njava.tuvivienda.exeptions.dto.Errors;
 
 import org.springframework.http.HttpStatus;
 

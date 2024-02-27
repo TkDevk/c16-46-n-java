@@ -54,7 +54,7 @@ public class Post {
     @JoinColumn(name = "administrator_id", referencedColumnName = "id")
     private Administrator administrator;
 
-    @OneToMany //Revisar
+    @OneToMany
     private List<Image> image;
 
 

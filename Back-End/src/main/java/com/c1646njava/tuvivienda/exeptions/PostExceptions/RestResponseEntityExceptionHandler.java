@@ -1,6 +1,7 @@
 package com.c1646njava.tuvivienda.exeptions.PostExceptions;
 
-import com.c1646njava.tuvivienda.DTO.Errors.errorMessage;
+import com.c1646njava.tuvivienda.exeptions.dto.Errors.errorMessage;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -18,10 +19,10 @@ import java.util.Map;
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(postNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<errorMessage> handlePostNotFoundException(postNotFoundException exception){
-        errorMessage mensaje = new errorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
+        errorMessage mensaje = new errorMessage(HttpStatus.NO_CONTENT, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(mensaje);
 
     }
 
@@ -52,6 +53,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<errorMessage> handleBadRequestException(BadRequestException exception){
+        errorMessage mensaje = new errorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mensaje);
+
+    }
 
 
 }
